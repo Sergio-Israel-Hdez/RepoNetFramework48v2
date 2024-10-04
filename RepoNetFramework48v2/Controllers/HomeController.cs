@@ -26,5 +26,9 @@ namespace RepoNetFramework48v2.Controllers
 
             return View();
         }
+        public ActionResult ContactB()
+        {
+            return View();
+        }
     }
 }
