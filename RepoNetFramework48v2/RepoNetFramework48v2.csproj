@@ -144,6 +144,7 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include=".dockerignore" />
+    <Content Include="Docker-Compose.yml" />
     <None Include="Dockerfile" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
