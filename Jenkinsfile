@@ -1,17 +1,43 @@
-﻿
-node {
-    stage('Checkout') {
-        // Checkout the source code from the repository
-        checkout scm
+﻿pipeline {
+    agent any
+
+    environment {
+        SOLUTION = 'RepoNetFramework48v2.sln'  // Reemplaza con el nombre real de tu .sln
+        BUILD_CONFIGURATION = 'Release'
+        OUTPUT_DIR = 'output'
     }
 
-    stage('Restore NuGet Packages') {
-        // Restore NuGet packages
-        bat 'nuget restore'
+    tools {
+        msbuild 'MSBuild_16' // Configúralo en Global Tool Configuration
     }
 
-    stage('Build') {
-        // Build the .NET Framework 4.8 project
-        bat 'msbuild /p:Configuration=Release /p:Platform="Any CPU"'
+    stages {
+        stage('Checkout') {
+            steps {
+                bat 'git checkout master'
+                bat 'git pull origin master'
+            }
+        }
+
+        stage('Restore Packages') {
+            steps {
+                bat 'nuget restore'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                bat 'msbuild'
+            }
+        }
+    }
+
+    post {
+        failure {
+            echo '❌ La build falló.'
+        }
+        success {
+            echo '✅ Build finalizada con éxito.'
+        }
     }
 }
